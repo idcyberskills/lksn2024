@@ -1,0 +1,128 @@
+Pid      Name                 Command Time                   Command
+-------- -------------------- ------------------------------ -------
+    1381 bash                 2024-08-12 13:32:38 UTC+0000   cd /tmp
+    1381 bash                 2024-08-12 13:32:39 UTC+0000   ls
+    1381 bash                 2024-08-12 13:32:48 UTC+0000   cd 
+    1381 bash                 2024-08-12 13:32:49 UTC+0000   lks
+    1381 bash                 2024-08-12 13:32:50 UTC+0000   ls
+    1381 bash                 2024-08-12 13:32:59 UTC+0000   lsmod
+    1381 bash                 2024-08-12 13:34:11 UTC+0000   ls
+    1381 bash                 2024-08-12 13:34:11 UTC+0000   cd /tmp
+    1381 bash                 2024-08-12 13:34:29 UTC+0000   git clone https://github.com/504ensicsLabs/LiME.git
+    1381 bash                 2024-08-12 13:34:42 UTC+0000   ls
+    1381 bash                 2024-08-12 13:34:42 UTC+0000   cd LiME/
+    1381 bash                 2024-08-12 13:34:44 UTC+0000   cd src
+    1381 bash                 2024-08-12 13:34:44 UTC+0000   ls
+    1381 bash                 2024-08-12 13:35:06 UTC+0000   make
+    1381 bash                 2024-08-12 13:35:12 UTC+0000   ls
+    1381 bash                 2024-08-12 13:36:15 UTC+0000   insmod ./lime-4.4.0-186-generic.ko "path=/tmp/forensic.mem format=lime"
+    1381 bash                 2024-08-12 13:36:24 UTC+0000   sudo insmod ./lime-4.4.0-186-generic.ko "path=/tmp/forensic.mem format=lime"
+    1381 bash                 2024-08-12 13:36:50 UTC+0000   ls
+    1381 bash                 2024-08-12 13:36:54 UTC+0000   lsmod
+    1381 bash                 2024-08-12 13:39:01 UTC+0000   cd /tmp
+    1381 bash                 2024-08-12 13:39:02 UTC+0000   ls
+    1381 bash                 2024-08-12 13:39:46 UTC+0000   git clone https://github.com/volatilityfoundation/volatility.git
+    1381 bash                 2024-08-12 13:40:04 UTC+0000   ls
+    1381 bash                 2024-08-12 13:40:07 UTC+0000   cd volatility/
+    1381 bash                 2024-08-12 13:40:08 UTC+0000   ls
+    1381 bash                 2024-08-12 13:40:24 UTC+0000   python2.7 -m pip install pycryptodome
+    1381 bash                 2024-08-12 13:40:31 UTC+0000   python2.7 -m pip install distorm3
+    1381 bash                 2024-08-12 13:41:20 UTC+0000   python2 -m pip install setuptools --upgrade
+    1381 bash                 2024-08-12 13:41:26 UTC+0000   python2.7 -m pip install setuptools --upgrade
+    1381 bash                 2024-08-12 13:41:36 UTC+0000   python2.7 -m pip install distorm3
+    1381 bash                 2024-08-12 13:42:20 UTC+0000   apt-get install python-dev
+    1381 bash                 2024-08-12 13:42:22 UTC+0000   sudo apt-get install python-dev
+    1381 bash                 2024-08-12 13:45:06 UTC+0000   ls
+    1381 bash                 2024-08-12 13:45:06 UTC+0000   cd volatility/
+    1381 bash                 2024-08-12 13:45:10 UTC+0000   ;s
+    1381 bash                 2024-08-12 13:45:10 UTC+0000   cd plugins/
+    1381 bash                 2024-08-12 13:45:11 UTC+0000   ls
+    1381 bash                 2024-08-12 13:45:38 UTC+0000   cd ..
+    1381 bash                 2024-08-12 13:45:38 UTC+0000   ls
+    1381 bash                 2024-08-12 13:45:43 UTC+0000   ls
+    1381 bash                 2024-08-12 13:45:43 UTC+0000   cd ..
+    1381 bash                 2024-08-12 13:46:03 UTC+0000   cd volatility/
+    1381 bash                 2024-08-12 13:46:03 UTC+0000   ls
+    1381 bash                 2024-08-12 13:46:08 UTC+0000   ls
+    1381 bash                 2024-08-12 13:46:08 UTC+0000   cd plugins/linux/
+    1381 bash                 2024-08-12 13:46:09 UTC+0000   cd ..
+    1381 bash                 2024-08-12 13:46:10 UTC+0000   cd pv
+    1381 bash                 2024-08-12 13:46:12 UTC+0000   cd overlays/
+    1381 bash                 2024-08-12 13:46:13 UTC+0000   ls
+    1381 bash                 2024-08-12 13:46:16 UTC+0000   cd linux/
+    1381 bash                 2024-08-12 13:46:16 UTC+0000   ls
+    1381 bash                 2024-08-12 13:46:18 UTC+0000   cd ..
+    1381 bash                 2024-08-12 13:46:20 UTC+0000   ls
+    1381 bash                 2024-08-12 13:46:21 UTC+0000   cd ..
+    1381 bash                 2024-08-12 13:46:22 UTC+0000   ls
+    1381 bash                 2024-08-12 13:46:53 UTC+0000   ls
+    1381 bash                 2024-08-12 13:46:53 UTC+0000   cd tools/
+    1381 bash                 2024-08-12 13:46:55 UTC+0000   ls
+    1381 bash                 2024-08-12 13:46:55 UTC+0000   cd linux/
+    1381 bash                 2024-08-12 13:46:59 UTC+0000   make
+    1381 bash                 2024-08-12 13:47:08 UTC+0000   ls
+    1381 bash                 2024-08-12 13:47:29 UTC+0000   zip Ubuntu16.04.zip module.dwarf /boot/System.map-4.4.0-186-generic 
+    1381 bash                 2024-08-12 13:47:34 UTC+0000   ls
+    1381 bash                 2024-08-12 13:47:36 UTC+0000   rm Ubuntu16.04.zip 
+    1381 bash                 2024-08-12 13:47:37 UTC+0000   sudo su
+    1381 bash                 2024-08-12 13:51:22 UTC+0000   cd
+    1381 bash                 2024-08-12 13:51:22 UTC+0000   ls
+    1381 bash                 2024-08-12 13:54:49 UTC+0000   nano evilrootkit.c
+    1381 bash                 2024-08-12 13:57:38 UTC+0000   ls
+    1381 bash                 2024-08-12 13:58:07 UTC+0000   nano Makefile
+    1381 bash                 2024-08-12 13:59:18 UTC+0000   ls
+    1381 bash                 2024-08-12 13:59:26 UTC+0000   make
+    1381 bash                 2024-08-12 13:59:50 UTC+0000   nano evilrootkit.c 
+    1381 bash                 2024-08-12 13:59:56 UTC+0000   make
+    1381 bash                 2024-08-12 14:00:00 UTC+0000   ls
+    1381 bash                 2024-08-12 14:00:13 UTC+0000   sudo su
+    1381 bash                 2024-08-12 14:00:48 UTC+0000   echo "I am about to pwn this guy's OS" > pwned.txt
+    1381 bash                 2024-08-12 14:00:52 UTC+0000   sudo su
+    1381 bash                 2024-08-12 14:01:41 UTC+0000   env
+    1381 bash                 2024-08-12 14:01:50 UTC+0000   sudo su
+    1381 bash                 2024-08-12 14:02:14 UTC+0000   ls
+    1381 bash                 2024-08-12 14:02:21 UTC+0000   nano secret.txt
+    1381 bash                 2024-08-12 14:03:43 UTC+0000   ls
+    1381 bash                 2024-08-12 14:03:50 UTC+0000   openssl passwd "hello"
+    1381 bash                 2024-08-12 14:04:20 UTC+0000   FANATIC=$(openssl passwd "LKSN2024asik")
+    1381 bash                 2024-08-12 14:04:23 UTC+0000   env
+    1381 bash                 2024-08-12 14:04:34 UTC+0000   echo $FANATIC
+    1381 bash                 2024-08-12 14:04:40 UTC+0000   export FANATIC=$FANATIC
+    1381 bash                 2024-08-12 14:04:42 UTC+0000   env
+    1381 bash                 2024-08-12 14:05:04 UTC+0000   echo $FANATIC | zip -P "$FANATIC" confidential.zip secret.txt 
+    1381 bash                 2024-08-12 14:05:06 UTC+0000   ls
+    1381 bash                 2024-08-12 14:05:27 UTC+0000   shred -u evilrootkit.c
+    1381 bash                 2024-08-12 14:05:38 UTC+0000   cd /tm
+    1381 bash                 2024-08-12 14:05:40 UTC+0000   ls
+    1381 bash                 2024-08-12 14:05:40 UTC+0000   cd /tmp
+    1381 bash                 2024-08-12 14:05:42 UTC+0000   cd LiME/
+    1381 bash                 2024-08-12 14:05:44 UTC+0000   cd src
+    1381 bash                 2024-08-12 14:05:45 UTC+0000   ls
+    1381 bash                 2024-08-12 14:05:52 UTC+0000   rm lime-4.4.0-186-generic.ko 
+    1381 bash                 2024-08-12 14:06:04 UTC+0000   make
+    1381 bash                 2024-08-12 14:06:07 UTC+0000   ls
+    1381 bash                 2024-08-12 14:06:13 UTC+0000   sudo su
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   exit
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   echo "Will eventually kill his OS!" > pwned.txt
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   exit
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   env
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   zip Ubuntu16.04.zip module.dwarf /boot/System.map-4.4.0-186-generic 
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   rm *.zip
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   ls
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   cd ..
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   ls
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   python2.7 vol.py --info | grep Ubuntu
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   exit
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   ls
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   mv Ubuntu16.04.zip ../../volatility/plugins/overlays/linux/
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   cd ..
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   exit
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   python2.7 vol.py -f ../forensic.mem --profile=LinuxUbuntu16_04x64 linux_bash
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   insmod evilrootkit.ko 
+    5150 bash                 2024-08-12 14:06:13 UTC+0000   rm forensic.mem 
+    5150 bash                 2024-08-12 14:06:38 UTC+0000   insmod ./lime-4.4.0-186-generic.ko "path=/tmp/tampered.mem format=lime"
+    5150 bash                 2024-08-12 14:06:51 UTC+0000   rmod lime-4.4.0-186-generic.ko 
+    5150 bash                 2024-08-12 14:07:26 UTC+0000   rmmod lime-4.4.0-186-generic.ko 
+    5150 bash                 2024-08-12 14:07:59 UTC+0000   mv lime-4.4.0-186-generic.ko lime-4.4.0-186-generic-copy.ko 
+    5150 bash                 2024-08-12 14:08:06 UTC+0000   insmod ./lime-4.4.0-186-generic-copy.ko "path=/tmp/tampered.mem format=lime"
+    5150 bash                 2024-08-12 14:08:29 UTC+0000   rmmod lime-4.4.0-186-generic
