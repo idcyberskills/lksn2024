@@ -15,5 +15,4 @@ random.seed(int(time.time()))
 x = random.getrandbits(8 * len(flag))
 y =  x ^ bytes_to_long(flag)
 
-
 print(y)
