@@ -1,4 +1,3 @@
-from Crypto.Util.number import bytes_to_long
 import random
 import time
 
@@ -12,7 +11,12 @@ except:
     exit(1)
 
 random.seed(int(time.time()))
+
+f = 0
+for i, z in enumerate(flag[::-1]):
+    f += (256**i) * z
+
 x = random.getrandbits(8 * len(flag))
-y =  x ^ bytes_to_long(flag)
+y =  x ^ f
 
 print(y)
