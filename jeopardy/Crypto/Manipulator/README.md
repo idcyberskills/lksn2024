@@ -16,7 +16,7 @@ Memanfaatkan metode manipulatif, Markus mengubah makna misterius melalui manipul
 
 ## Difficulty
 
-`easy`
+`medium`
 
 ## Hints
 
