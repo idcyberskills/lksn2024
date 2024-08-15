@@ -1,0 +1,7 @@
+services:
+  brainrot:
+    build: .
+    ports:
+      - "14120:14120"
+    entrypoint: /etc/init.sh
+    restart: unless-stopped
