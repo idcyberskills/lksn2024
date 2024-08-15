@@ -1,0 +1,16 @@
+*{
+margin: 0px;
+padding: 0px;
+}
+
+body {
+box-sizing: border-box;
+}
+
+main {
+text-align: center;
+width: 80%;
+height: 100vh;
+margin: auto;
+background: rgb(200, 200, 219);
+}
