@@ -16,6 +16,8 @@ Hari pertama LKSN 2024 Cybersecurity berlangsung dan kami segenap panitia dan ju
 Karena cukup meresahkan, dapatkah kamu membantu kami untuk mengecek dari mana file asli tersebut **di-download/unduh** ?
 Diduga dari model laptop tersebut, pelaku menggunakan OS Windows.
 
+Password dari arsip file-nya adalah = `lksnlampung`
+
 Jika kamu berhasil mengetahui bahwa file tersebut diunduh dari suatu website yang menjadi tersangka sumbernya, misal didapat dari `https://internal.lksn2024.wordpress.ajinomoto.com/gambaraseli.jpg` maka kamu dapat men-submit flagnya dengan prefix LKSN dan hanya cantumkan domain/subdomainnya saja!
 
 Contoh: LKSN{internal.lksn2024.wordpress.ajinomoto.com}
