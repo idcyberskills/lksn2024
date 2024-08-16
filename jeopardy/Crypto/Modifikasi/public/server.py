@@ -6,10 +6,6 @@ print("Tiket tersebut diverifikasi menggunakan md5")
 print("Dapatkah anda membuat tiket palsu untuk dijual ke Bob?")
 
 alice = bytes.fromhex(input("Masukkan kode tiket untuk dijual ke Alice: "))
-if not alice.startswith(b"TIKETTAYLORSWIFTASLI"):
-    print("Kode tiket tidak valid")
-    exit()
-
 md5alice = md5(alice).digest()
 print("md5 dari tiket Alice:", md5alice.hex())
 

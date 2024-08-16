@@ -34,7 +34,7 @@ while len(primes) > 0:
         else:
             print("Message too long")
     elif choice == 2:
-        n = gen_pubkey()k
+        n = gen_pubkey()
         print("The public key:", n)
     elif choice == 3:
         print("Please sign the following captcha")

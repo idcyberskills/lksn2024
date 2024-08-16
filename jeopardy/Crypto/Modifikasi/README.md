@@ -16,11 +16,11 @@ Melalui metode misterius, memodifikasi muatan, meski memiliki makna mendasar, me
 
 ## Difficulty
 
-`hard`
+`easy`
 
 ## Hints
 
-* Mungkin, mengeksplorasi media maya, [memeriksa mesin media manajemen](https://github.com/corkami/collisions), membuka misteri. Mencari maklumat mengenai modifikasi mirip, mungkin memperoleh makna. Mencapai mutakhir, melacak masalah, menyelami makna misterius.
+Intentionally left empty
 
 ## Tags
 
