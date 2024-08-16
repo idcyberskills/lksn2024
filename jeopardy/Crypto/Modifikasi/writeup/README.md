@@ -1,3 +1,3 @@
 # Writeup
 
-Hash collision ini dapat digenerate menggunakan hashclash
+Hash collision ini dapat di googling di internet
