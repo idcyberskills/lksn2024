@@ -1,4 +1,4 @@
-# Manipulator
+# Modifikasi
 
 wrth
 
@@ -7,7 +7,7 @@ wrth
 ## Flag
 
 ```
-LKSN{}
+LKSN{bb61f6f3aacf84db45ee046bbf4edd55b0c11f52367f46fdb11b792833dece11}
 ```
 
 ## Description
