@@ -16,7 +16,7 @@ Membuat manifestasi megah, mekanisme mutakhir muncul. Mencipta, mengatur, mempro
 
 ## Difficulty
 
-`easy`
+`hard`
 
 ## Hints
 

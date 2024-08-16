@@ -11,16 +11,6 @@ def aes_bcebccbcbecbeb(iv, data, key):
     cipher = AES.new(key, AES.MODE_ECB)
     return xor(cipher.encrypt(data), iv)
 
-def encrypt(data, iv=None):
-    if iv is None:
-        iv = os.urandom(16)
-    print(f"IV: {iv.hex()}")
-    ct = b""
-    for i in range(0, len(data), 16):
-        ct += aes_bcebccbcbecbeb(data[i:i+16], iv, key)
-        iv = ct[-16:]
-    print(f"CT: {ct.hex()}")
-
 while True:
     print("1. Encrypt")
     print("2. Get Flag")
@@ -29,11 +19,22 @@ while True:
     if choice == 1:
         iv = bytes.fromhex(input("IV: "))
         if len(iv) != 16:
-            iv = None
+            print("Invalid IV")
+            continue
         data = bytes.fromhex(input("Msg: "))
-        data = pad(data, 16)
-        encrypt(data, iv)
+        if len(data) != 16:
+            print("For free trial, only 16 bytes allowed")
+            continue
+        print(f"CT: {aes_bcebccbcbecbeb(iv, data, key).hex()}")
+        
     elif choice == 2:
-        encrypt(FLAG)
+        iv = os.urandom(16)
+        print(f"IV: {iv.hex()}")
+        ct = b""
+        for i in range(0, len(FLAG), 16):
+            ct += aes_bcebccbcbecbeb(FLAG[i:i+16], iv, key)
+            iv = ct[-16:]
+        
+        print(f"CT: {ct.hex()}")
     elif choice == 3:
         break
