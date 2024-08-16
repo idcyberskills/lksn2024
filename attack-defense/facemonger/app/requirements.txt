@@ -5,6 +5,7 @@ Jinja2==2.11.2
 MarkupSafe==1.1.1
 Werkzeug==1.0.1
 python-dotenv==0.17.0
-torch==2.1.0
-numpy==1.26.0
+torch
+numpy
 ultralytics
+gunicorn

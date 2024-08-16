@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 from ultralytics import YOLO
 import secrets
 import base64
+import hashlib
 import string
 
 # Load environment variables into module
@@ -45,8 +46,8 @@ def upload():
         
     if 'image' in data and 'filename' in data:
         image_data = data['image'].split(",")[1]
-        filename = data['filename']
-        os.environ['SAMPLE_NAME'] = filename
+        filename = generate_random_filename(extension='jpg', length=32)
+        os.environ['LAST_EDITED_FILE'] = data['filename']
         
         image_bytes = base64.b64decode(image_data)
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -77,13 +78,12 @@ def upload():
                     })
 
             img_annot = result.plot()
-            img_name = generate_random_filename(extension='jpg', length=32)
 
             dest_directory = app.config['RESULT_FOLDER']
-            cv2.imwrite(f'{dest_directory}/{img_name}', img_annot)
+            cv2.imwrite(f'{dest_directory}/{filename}', img_annot)
             print(detected_objects)
 
-            image_url = url_for('static', filename=f'results/{img_name}')
+            image_url = url_for('static', filename=f'results/{filename}')
 
         return jsonify({
             'image_url': image_url,
