@@ -4,6 +4,7 @@ import requests
 import uuid
 import base64
 import json
+import hashlib
 
 class ServiceType(TypedDict):
     id: int
@@ -83,7 +84,9 @@ def check_regular_user(ip):
     token = ""
     try:
         token = body['token']
-        token_segment_2 = json.loads(base64.b64decode(token.split('.')[1]).decode())
+        s = token.split('.')[1]
+        s += '=' * (-len(s) % 4)
+        token_segment_2 = json.loads(base64.b64decode(s).decode())
         assert token_segment_2['username'] == username
     except:
         return (
@@ -128,6 +131,105 @@ def check_regular_user(ip):
         }
     )
 
+def check_admin(ip, flag):
+    username = 'admin'
+    hasher = hashlib.sha256()
+    hasher.update(flag.encode())
+    password = hasher.hexdigest()
+    data = flag
+
+    body = {}
+    try:
+        res = requests.post(ip + "/register", json={
+            "username": username,
+            "password": password,
+            "data": data,
+        })
+        body = res.json()
+    except:
+        return (
+            False,
+            {
+                "message": "fail to send request to register api"
+            }
+        )
+
+    try:
+        assert body['detail'] == "username already registered"
+    except:
+        return (
+            False,
+            {
+                "message": "response from register api is incorrect"
+            }
+        )
+    
+    body = {}
+    try:
+        res = requests.post(ip + "/login", json={
+            "username": username,
+            "password": password,
+            "data": data,
+        })
+        body = res.json()
+    except:
+        return (
+            False,
+            {
+                "message": "fail to send request to login api"
+            }
+        )
+
+    token = ""
+    try:
+        token = body['token']
+        s = token.split('.')[1]
+        s += '=' * (-len(s) % 4)
+        token_segment_2 = json.loads(base64.b64decode(s).decode())
+        assert token_segment_2['username'] == username
+    except:
+        return (
+            False,
+            {
+                "message": "response from login api is incorrect"
+            }
+        )
+
+    body = {}
+    try:
+        res = requests.post(ip + "/data", json={
+            "username": username,
+            "password": password,
+            "data": data,
+        }, headers={
+            "Authorization": token,
+        })
+        body = res.json()
+    except:
+        return (
+            False,
+            {
+                "message": "fail to send request to get data api"
+            }
+        )
+
+    try:
+        assert body['data'] == data
+    except:
+        return (
+            False,
+            {
+                "message": "missing flag"
+            }
+        )
+    
+    return (
+        True,
+        {
+            "message": "OK"
+        }
+    )
+
 def main(services: List[ServiceType], flags: List[FlagType], checker_agent_report: CheckerAgentReport) -> Tuple[bool, Dict]:
     service_detail = services[0]["detail"]
 
@@ -145,3 +247,4 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
     return result_check_regular_user
 
 #print(check_regular_user('http://localhost:8000'))
+#print(check_admin('http://localhost:8000', 'LKSN{PLACEHOLDER}'))
