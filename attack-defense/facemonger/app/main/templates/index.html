@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FaceMonger</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="symbols">
+        <span>&#128100;&#128100;&#128100;</span> <!-- 3 person symbols -->
+        <span>&#128663;</span> <!-- 1 car symbol -->
+        <span>&#128188;</span> <!-- 1 suitcase symbol -->
+    </div>
+
+    <div class="webcam-container">
+        <div id="webcam">
+            <video id="video" autoplay></video>
+            <div>
+                <button id="capture">Capture Photo</button>
+                <button id="toggleCamera">Turn On/Off Camera</button>
+            </div>
+        </div>
+        
+        <div id="capturedImageContainer" style="display: none;">
+            <img id="capturedImage" alt="Captured Image" />
+            <div>
+                <button id="retakePhoto">Retake Photo</button>
+                <button id="submitPhoto">Submit Photo</button>
+            </div>
+        </div>
+        
+        <canvas id="canvas" style="display: none;"></canvas>
+    </div>
+
+    <div id="loadingOverlay" style="display: none;">Loading...</div>
+
+    <div id="result">
+        <p id="detectionResult"></p>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Detection Result</h3>
+            <div id="modal-result"></div>
+            <img id="modal-image" src="" alt="Annotated Image" class="result-image">
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

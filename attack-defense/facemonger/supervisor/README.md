@@ -1,0 +1,1 @@
+Store to /etc/supervisor/conf.d/facemonger_app.supervisord.conf
