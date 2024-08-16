@@ -31,7 +31,11 @@ class CheckerAgentReport(TypedDict):
     challenge_status: Dict
     time_created: datetime.datetime
 
-def check_endpoints(ip, username, password, data):
+def check_regular_user(ip):
+    username = str(uuid.uuid4())
+    password = str(uuid.uuid4())
+    data = str(uuid.uuid4())
+
     body = {}
     try:
         res = requests.post(ip + "/register", json={
@@ -134,8 +138,10 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
     privkey = credentials["private_key"]
     instance_id = credentials["instance_id"]
     
-    result_check_regular_user = check_endpoints(ip, str(uuid.uuid4()), str(uuid.uuid4()), str(uuid.uuid4()))
+    result_check_regular_user = check_regular_user(ip)
+    if not result_check_regular_user[0]:
+        return result_check_regular_user
 
     return result_check_regular_user
 
-#print(check_endpoints('http://localhost:8000', str(uuid.uuid4()), str(uuid.uuid4()), str(uuid.uuid4())))
+#print(check_regular_user('http://localhost:8000'))
