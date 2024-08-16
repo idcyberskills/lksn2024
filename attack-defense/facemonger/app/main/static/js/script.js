@@ -80,10 +80,20 @@ submitPhotoButton.addEventListener('click', () => {
         .then(data => {
             loadingOverlay.style.display = 'none';
 
-            resultText.textContent = data.message;
-            if (data.revealSecret) {
-                secretWord.style.display = 'block';
+            if (data.error) {
+                document.getElementById('detectionResult').innerHTML = `<p>Error: ${data.error}</p>`;
+                return;
             }
+
+            var resultHtml = ""
+            data.detection_result.forEach(item => {
+                resultHtml += `<p>Class: ${item.class}, Confidence: ${(item.confidence * 100).toFixed(2)}%</p>`;
+            });
+
+            document.getElementById('modal-result').innerHTML = resultHtml;
+            document.getElementById('modal-image').src = data.image_url;
+
+            document.getElementById('myModal').style.display = 'block';
         })
         .catch(err => {
             loadingOverlay.style.display = 'none';
@@ -100,3 +110,16 @@ retakePhotoButton.addEventListener('click', () => {
         startCamera();
     }
 });
+
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}

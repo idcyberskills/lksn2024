@@ -37,7 +37,15 @@
 
     <div id="result">
         <p id="detectionResult"></p>
-        <p id="secretWord" style="display: none;">Congratulations! The secret word is: "SUCCESS".</p>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Detection Result</h3>
+            <div id="modal-result"></div>
+            <img id="modal-image" src="" alt="Annotated Image" class="result-image">
+        </div>
     </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
