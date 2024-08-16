@@ -2,9 +2,10 @@ from fastapi import FastAPI, HTTPException, Header
 from dataclasses import dataclass
 import hashlib
 import jwt
+import os
 
 app = FastAPI()
-flag_path = './flag/flag.txt'
+flag_path = os.getcwd() + '/flag/flag.txt'
 secret = "VERY_SECURE"
 
 @dataclass
@@ -15,16 +16,18 @@ class User:
 
 users = {}
 
-def update_admin_password():
+def update_admin():
     f = open(flag_path, "rb")
-    hasher = hashlib.sha256()
-    hasher.update(f.read())
-    users["admin"].password = hasher.hexdigest()
+    flag = f.read()
     f.close()
+    hasher = hashlib.sha256()
+    hasher.update(flag)
+    users["admin"].password = hasher.hexdigest()
+    users["admin"].data = flag
 
 @app.post("/register")
 def register(user: User):
-    update_admin_password()
+    update_admin()
     if user.username in users:
         raise HTTPException(status_code=400, detail="username already registered")
     users[user.username] = user
@@ -32,7 +35,7 @@ def register(user: User):
 
 @app.post("/login")
 def login(user: User):
-    update_admin_password()
+    update_admin()
     if user.username not in users:
         raise HTTPException(status_code=404, detail="user not found")
     usr = users[user.username]
@@ -51,9 +54,10 @@ def login(user: User):
 
 @app.post("/data")
 def get_data(user: User, authorization: str = Header(None)):
-    update_admin_password()
+    update_admin()
     try:
-        jwt.decode(authorization, secret, algorithms=['HS256'])
+        data = jwt.decode(authorization, secret, algorithms=['HS256'])
+        assert data['username'] in users
     except:
         raise HTTPException(status_code=401, detail="wrong token")
     if user.username not in users:
@@ -62,5 +66,5 @@ def get_data(user: User, authorization: str = Header(None)):
 
 f = open(flag_path)
 users["admin"] = User("admin", "", f.read())
-update_admin_password()
+update_admin()
 f.close()
