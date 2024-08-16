@@ -1,5 +1,5 @@
 # Import modules
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import os
 import cv2
 import numpy as np
@@ -7,6 +7,7 @@ from main import app
 from werkzeug.utils import secure_filename
 from ultralytics import YOLO
 import secrets
+import base64
 import string
 
 # Load environment variables into module
@@ -34,45 +35,60 @@ def generate_random_filename(extension="", length=16):
     
     return random_filename
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            return redirect(request.url)
-        
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            img = cv2.imread(file_path)
-            
-            model = YOLO(app.config['MODEL'])
-            detections = model(img)
-            
-            if len(detections) > 0:
-                result = detections[0]
-                boxes = result.boxes
-                detected_objects = []
-
-                for box in boxes:
-                    class_id = int(box.data[0][-1])
-                    class_name = model.names[class_id]
-                    confidence = float(box.conf.cpu().numpy()) 
-
-                    if confidence > (int(app.config['PREDICTION_THRESHOLD']) / 100):
-                        detected_objects.append({
-                            "class": class_name,
-                            "confidence": confidence
-                        })
-
-                img_annot = result.plot()
-                img_name = generate_random_filename(extension='jpg', length=32)
-
-                dest_directory = app.config['RESULT_FOLDER']
-                cv2.imwrite(f'{dest_directory}/{img_name}', img_annot)
-                print(detected_objects)
-
-            return render_template('index.html')
-        
     return render_template('index.html')
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    data = request.get_json()
+        
+    if 'image' in data and 'filename' in data:
+        image_data = data['image'].split(",")[1]
+        filename = data['filename']
+        os.environ['SAMPLE_NAME'] = filename
+        
+        image_bytes = base64.b64decode(image_data)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        
+        with open(file_path, 'wb') as image_file:
+            image_file.write(image_bytes)
+
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        img = cv2.imread(file_path)
+        
+        model = YOLO(app.config['MODEL'])
+        detections = model(img)
+        
+        if len(detections) > 0:
+            result = detections[0]
+            boxes = result.boxes
+            detected_objects = []
+
+            for box in boxes:
+                class_id = int(box.data[0][-1])
+                class_name = model.names[class_id]
+                confidence = float(box.conf.cpu().numpy()) 
+
+                if confidence > (int(app.config['PREDICTION_THRESHOLD']) / 100):
+                    detected_objects.append({
+                        "class": class_name,
+                        "confidence": confidence
+                    })
+
+            img_annot = result.plot()
+            img_name = generate_random_filename(extension='jpg', length=32)
+
+            dest_directory = app.config['RESULT_FOLDER']
+            cv2.imwrite(f'{dest_directory}/{img_name}', img_annot)
+            print(detected_objects)
+
+            image_url = url_for('static', filename=f'results/{img_name}')
+
+        return jsonify({
+            'image_url': image_url,
+            'detection_result': detected_objects,
+        })
+    
+    return jsonify({"message": "No image data or filename received."}), 400
+    

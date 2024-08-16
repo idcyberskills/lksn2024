@@ -3,13 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Image</title>
+    <title>Webcam YOLO Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Upload an Image for Object Detection</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit" value="Upload">
-    </form>
+    <div class="symbols">
+        <span>&#128100;&#128100;&#128100;</span> <!-- 3 person symbols -->
+        <span>&#128663;</span> <!-- 1 car symbol -->
+        <span>&#128188;</span> <!-- 1 suitcase symbol -->
+    </div>
+
+    <div class="webcam-container">
+        <div id="webcam">
+            <video id="video" autoplay></video>
+            <div>
+                <button id="capture">Capture Photo</button>
+                <button id="toggleCamera">Turn On/Off Camera</button>
+            </div>
+        </div>
+        
+        <div id="capturedImageContainer" style="display: none;">
+            <img id="capturedImage" alt="Captured Image" />
+            <div>
+                <button id="retakePhoto">Retake Photo</button>
+                <button id="submitPhoto">Submit Photo</button>
+            </div>
+        </div>
+        
+        <canvas id="canvas" style="display: none;"></canvas>
+    </div>
+
+    <div id="loadingOverlay" style="display: none;">Loading...</div>
+
+    <div id="result">
+        <p id="detectionResult"></p>
+        <p id="secretWord" style="display: none;">Congratulations! The secret word is: "SUCCESS".</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
