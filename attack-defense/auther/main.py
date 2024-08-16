@@ -64,6 +64,15 @@ def get_data(user: User, authorization: str = Header(None)):
         raise HTTPException(status_code=401, detail="username invalid")
     return users[user.username]
 
+@app.post("/delete")
+def delete(authorization: str = Header(None)):
+    try:
+        data = jwt.decode(authorization, secret, algorithms=['HS256'])
+        assert data['username'] in users
+        del users[data['username']]
+    except:
+        raise HTTPException(status_code=401, detail="wrong token")
+
 f = open(flag_path)
 users["admin"] = User("admin", "", f.read())
 update_admin()
