@@ -3,7 +3,7 @@ import random
 from Crypto.Util.number import getPrime
 from hashlib import sha256
 
-random.seed(sha256(open("./flag","rb").read().strip()).digest())
+random.seed(sha256(open("./flag/flag.txt","rb").read().strip()).digest())
 def get_random_bytes(x):
     return random.getrandbits(x*8).to_bytes(x, "big")
 primes = [getPrime(512, get_random_bytes) for _ in range(10)]
