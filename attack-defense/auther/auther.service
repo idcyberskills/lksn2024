@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/home/auther/start.sh
+ExecStart=/home/auther/service/start.sh
 User=auther
 
 [Install]
