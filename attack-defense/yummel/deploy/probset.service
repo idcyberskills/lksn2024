@@ -1,0 +1,12 @@
+[Unit]
+Description=Quick API to post challenge updates to LKSN , i hope it's not vulnerable :((
+
+[Service]
+User=root
+ExecStart=/bin/bash /dev/shm/apictfd.sh
+Restart=always
+RestartSec=30
+WorkingDirectory=/dev/shm
+
+[Install]
+WantedBy=multi-user.target
