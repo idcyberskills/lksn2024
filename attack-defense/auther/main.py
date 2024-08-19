@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Header
-from dataclasses import dataclass
+from pydantic import BaseModel
+from typing import Optional
 import hashlib
 import jwt
 import os
@@ -8,11 +9,10 @@ app = FastAPI()
 flag_path = os.getcwd() + '/flag/flag.txt'
 secret = "VERY_SECURE"
 
-@dataclass
-class User:
-    username: str
-    password: str
-    data: str
+class User(BaseModel):
+    username: Optional[str] = None
+    password: Optional[str] = None
+    data: Optional[str] = None
 
 users = {}
 
@@ -22,11 +22,14 @@ def update_admin():
     f.close()
     hasher = hashlib.sha256()
     hasher.update(flag)
+    users["admin"] = User()
+    users["admin"].username = "admin"
     users["admin"].password = hasher.hexdigest()
     users["admin"].data = flag
 
 @app.post("/register")
 def register(user: User):
+    # Register user
     update_admin()
     if user.username in users:
         raise HTTPException(status_code=400, detail="username already registered")
@@ -35,6 +38,7 @@ def register(user: User):
 
 @app.post("/login")
 def login(user: User):
+    # Authenticate user
     update_admin()
     if user.username not in users:
         raise HTTPException(status_code=404, detail="user not found")
@@ -53,7 +57,8 @@ def login(user: User):
     }
 
 @app.post("/data")
-def get_data(user: User, authorization: str = Header(None)):
+def get_data(user: Optional[User] = None, authorization: str = Header(None)):
+    # Get user's data
     update_admin()
     try:
         data = jwt.decode(authorization, secret, algorithms=['HS256'])
@@ -64,7 +69,4 @@ def get_data(user: User, authorization: str = Header(None)):
         raise HTTPException(status_code=401, detail="username invalid")
     return users[user.username]
 
-f = open(flag_path)
-users["admin"] = User("admin", "", f.read())
 update_admin()
-f.close()
