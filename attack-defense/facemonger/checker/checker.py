@@ -4,8 +4,8 @@ import time
 import requests
 import json
 
-# BASE_URL = "http://54.169.22.114:7744"
-BASE_URL = "{{URL}}" # to be replaced with player's machine ip
+BASE_URL = "http://54.169.22.114:7744"
+# BASE_URL = "{{URL}}" # to be replaced with player's machine ip
 URL_UPLOAD = f"{BASE_URL}/upload"
 
 def run_testcase():
