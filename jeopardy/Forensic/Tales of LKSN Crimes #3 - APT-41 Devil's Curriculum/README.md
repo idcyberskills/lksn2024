@@ -29,3 +29,11 @@ Password dari arsip file akuisisi adalah `LKSN2024_seru_uhuy_WHY?!`.
 
 ## Tags
 `volatility`, `fake-rootkit-module`
+
+## Deployment
+
+```
+sudo docker build -t rootskids .
+
+sudo docker run -p 23897:23897 -d -it rootskids
+```

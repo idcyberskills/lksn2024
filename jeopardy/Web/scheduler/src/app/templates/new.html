@@ -1,0 +1,55 @@
+{% extends '_base.html' %}
+
+{% block 'title' %}Create new scheduler{% endblock %}
+
+{% block 'content' %}
+<main class="container">
+  <div class="row mt-5">
+    <div class="mx-auto col-6">
+      <h2>Create a new scheduler</h2>
+      {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+      {% endif %}
+      <form class="mt-3" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="textboxUsername" class="form-label">Title</label>
+          <input type="text" class="form-control" id="textboxUsername" name="title" required>
+        </div>
+        <div class="mb-3">
+          <label for="date" class="form-label">Event Date</label>
+          <input type="date" class="form-control" id="date" name="event_date" required>
+        </div>
+        <div class="mb-3">
+          <label for="time" class="form-label">Event Time</label>
+          <input type="time" class="form-control" id="time" name="event_time" required>
+        </div>
+        <div class="mb-3 form-group">
+          <label for="repeat" class="form-label">Repeat every</label>
+          <select class="form-select" id="repeat" name="repeat" required>
+            <option value="no repeat">No repeat</option>
+            <option value="minute">minute</option>
+            <option value="hour">hour</option>
+            <option value="day">day</option>
+            <option value="week">week</option>
+            <option value="month">month</option>
+            <option value="year">year</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</main>
+{% endblock %}
