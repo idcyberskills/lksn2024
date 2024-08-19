@@ -291,6 +291,10 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
     if not result_check_admin[0]:
         return result_check_admin
 
+    result_check_upload_file_endpoint = check_upload_file_endpoint(ip)
+    if not result_check_upload_file_endpoint[0]:
+        return result_check_upload_file_endpoint
+
     return (
         True,
         {
@@ -301,3 +305,16 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
 #print(check_regular_user('http://localhost:8000'))
 #print(check_admin('http://localhost:8000', 'LKSN{PLACEHOLDER}'))
 #print(check_upload_file_endpoint('http://localhost:8000'))
+#print(main(
+#    [{'detail': {
+#        'checker': {
+#            'ip': 'http://localhost:8000',
+#            'username': '',
+#            'private_key': '',
+#            'instance_id': '',
+#        },
+#        'stack_name': ''
+#    }}],
+#    [{'value': 'LKSN{PLACEHOLDER}'}],
+#    None
+#))
