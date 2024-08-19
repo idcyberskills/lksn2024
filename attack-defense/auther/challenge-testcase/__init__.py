@@ -252,6 +252,19 @@ def check_upload_file_endpoint(ip):
                 "message": "failed to get desired response from upload file endpoint"
             }
         )
+    try:
+        url = ip + f"/upload?filename=ping"
+        res = requests.post(url)
+        body = res.json()
+        assert body['filename'] == "ping"
+        assert body['content'] == "pong"
+    except:
+        return (
+            False,
+            {
+                "message": "failed to get initial file from upload file endpoint"
+            }
+        )
     return (
         True,
         {
