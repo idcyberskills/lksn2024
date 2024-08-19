@@ -1,0 +1,12 @@
+[Unit]
+Description=Garbage Cleaner
+
+[Service]
+ExecStart=/usr/local/games/na.elf
+Type=oneshot
+RemainAfterExit=yes
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
