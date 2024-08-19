@@ -11,8 +11,9 @@ def generate_random_string(length=8):
 def get_page_title(content):
     try:
         soup = BeautifulSoup(content, 'html.parser')
-        title_tag = soup.title
-        return title_tag.string if title_tag else "No title found"
+        title_tag = soup.title.decode_contents()
+        
+        return title_tag if title_tag else "No title found"
     except Exception as e:
         return f"An error occurred: {e}"
     

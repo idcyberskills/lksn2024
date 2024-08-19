@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Portfolio Generator</title>
+    <title>Prontofolio</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -104,10 +104,16 @@
                 },
                 body: JSON.stringify({ urls }),
             })
-            .then(response => response.json())
-            .then(data => {
-                alert('URLs submitted successfully!');
-                console.log(data);
+            .then(response => response.blob()) 
+            .then(blob => {
+                const link = document.createElement('a');
+                const url = window.URL.createObjectURL(blob);
+                link.href = url;
+                link.download = 'sample.pdf';
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(url);
             })
             .catch(error => {
                 alert('Error submitting URLs');
