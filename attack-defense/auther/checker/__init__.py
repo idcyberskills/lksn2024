@@ -33,14 +33,14 @@ class CheckerAgentReport(TypedDict):
     challenge_status: Dict
     time_created: datetime.datetime
 
-def check_regular_user(ip):
+def check_regular_user(base_url):
     username = str(uuid.uuid4())
     password = str(uuid.uuid4())
     data = str(uuid.uuid4())
 
     body = {}
     try:
-        res = requests.post(ip + "/register", json={
+        res = requests.post(base_url + "/register", json={
             "username": username,
             "password": password,
             "data": data,
@@ -68,7 +68,7 @@ def check_regular_user(ip):
     
     body = {}
     try:
-        res = requests.post(ip + "/login", json={
+        res = requests.post(base_url + "/login", json={
             "username": username,
             "password": password,
             "data": data,
@@ -99,7 +99,7 @@ def check_regular_user(ip):
 
     body = {}
     try:
-        res = requests.post(ip + "/data", json={
+        res = requests.post(base_url + "/data", json={
             "username": username,
             "password": password,
             "data": data,
@@ -132,7 +132,7 @@ def check_regular_user(ip):
         }
     )
 
-def check_admin(ip, flag):
+def check_admin(base_url, flag):
     username = 'admin'
     hasher = hashlib.sha256()
     hasher.update(flag.encode())
@@ -141,7 +141,7 @@ def check_admin(ip, flag):
 
     body = {}
     try:
-        res = requests.post(ip + "/register", json={
+        res = requests.post(base_url + "/register", json={
             "username": username,
             "password": password,
             "data": data,
@@ -167,7 +167,7 @@ def check_admin(ip, flag):
     
     body = {}
     try:
-        res = requests.post(ip + "/login", json={
+        res = requests.post(base_url + "/login", json={
             "username": username,
             "password": password,
             "data": data,
@@ -198,7 +198,7 @@ def check_admin(ip, flag):
 
     body = {}
     try:
-        res = requests.post(ip + "/data", json={
+        res = requests.post(base_url + "/data", json={
             "username": username,
             "password": password,
             "data": data,
@@ -231,7 +231,7 @@ def check_admin(ip, flag):
         }
     )
 
-def check_upload_file_endpoint(ip):
+def check_upload_file_endpoint(base_url):
     try:
         a = str(uuid.uuid4())
         b = str(uuid.uuid4())
@@ -240,7 +240,7 @@ def check_upload_file_endpoint(ip):
         fake_file_bytes = io.BytesIO(fake_file.getvalue())
         files = {"file": (str(uuid.uuid4()), fake_file_bytes, "text/plain")}
 
-        url = ip + f"/upload?filename={b}"
+        url = base_url + f"/upload?filename={b}"
         res = requests.post(url, files=files)
         body = res.json()
         assert body['filename'] == b
@@ -253,7 +253,7 @@ def check_upload_file_endpoint(ip):
             }
         )
     try:
-        url = ip + f"/upload?filename=ping"
+        url = base_url + f"/upload?filename=ping"
         res = requests.post(url)
         body = res.json()
         assert body['filename'] == "ping"
@@ -283,15 +283,16 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
     instance_id = credentials["instance_id"]
     flag = flags[0]["value"]
     
-    result_check_regular_user = check_regular_user(ip)
+    base_url = f'http://{ip}:8000'
+    result_check_regular_user = check_regular_user(base_url)
     if not result_check_regular_user[0]:
         return result_check_regular_user
     
-    result_check_admin = check_admin(ip, flag)
+    result_check_admin = check_admin(base_url, flag)
     if not result_check_admin[0]:
         return result_check_admin
 
-    result_check_upload_file_endpoint = check_upload_file_endpoint(ip)
+    result_check_upload_file_endpoint = check_upload_file_endpoint(base_url)
     if not result_check_upload_file_endpoint[0]:
         return result_check_upload_file_endpoint
 
@@ -302,13 +303,13 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         }
     )
 
-#print(check_regular_user('http://localhost:8000'))
-#print(check_admin('http://localhost:8000', 'LKSN{PLACEHOLDER}'))
-#print(check_upload_file_endpoint('http://localhost:8000'))
+#print(check_regular_user('localhost'))
+#print(check_admin('localhost', 'LKSN{PLACEHOLDER}'))
+#print(check_upload_file_endpoint('localhost'))
 #print(main(
 #    [{'detail': {
 #        'checker': {
-#            'ip': 'http://localhost:8000',
+#            'ip': 'localhost',
 #            'username': '',
 #            'private_key': '',
 #            'instance_id': '',
