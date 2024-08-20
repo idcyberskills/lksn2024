@@ -259,14 +259,7 @@ def check_admin(proc, flag):
     )
 
 def main(services: List[ServiceType], flags: List[FlagType], checker_agent_report: CheckerAgentReport) -> Tuple[bool, Dict]:
-    service_detail = services[0]["detail"]
-
-    credentials = service_detail["checker"]
-    aws_stack_name = service_detail["stack_name"]
-    ip = credentials["ip"]
-    username = credentials["username"]
-    privkey = credentials["private_key"]
-    instance_id = credentials["instance_id"]
+    ip = services[0]["detail"]["checker"]["ip"]
     flag = flags[0]["value"]
     port = 10003
     

@@ -92,15 +92,7 @@ def check_3(io):
 	return True
 
 def main(services: List[ServiceType], flags: List[FlagType], checker_agent_report: CheckerAgentReport) -> Tuple[bool, Dict]:
-    service_detail = services[0]["detail"]
-
-    credentials = service_detail["checker"]
-    aws_stack_name = service_detail["stack_name"]
-    ip = credentials["ip"]
-    username = credentials["username"]
-    privkey = credentials["private_key"]
-    instance_id = credentials["instance_id"]
-    flag = flags[0]["value"]
+    ip = services[0]["detail"]["checker"]["ip"]
     port = 11100
 
     proc = None
