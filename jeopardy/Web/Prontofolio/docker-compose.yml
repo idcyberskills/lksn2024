@@ -19,4 +19,3 @@ services:
       ENTRY_PORT: 7755 
     ports:
       - 7755:7755 # Envoy listening port
-      - 9901:9901 # Envoy admin port

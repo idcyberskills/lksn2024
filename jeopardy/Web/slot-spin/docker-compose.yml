@@ -1,10 +1,21 @@
 services:
   web:
     build: .
-    ports:
-    - "9012:80"
+    expose:
+      - 80
+    # ports:
+    # - "9012:80"
     restart: always
     environment:
     - FLAG=LKSN{jangan_ya_dek_ya__jangan_buka_web_semacam_ini_ya_dek_ya}
     volumes:
     - "./src:/var/www/html"
+  wazoy:
+    image: siahaan/wazoy-ve
+    environment:
+      WAZUH_MANAGER_IP: 18.141.55.229
+      APP_HOST: web
+      APP_PORT: 80
+      ENTRY_PORT: 9012 
+    ports:
+      - 9012:9012 # Envoy listening port

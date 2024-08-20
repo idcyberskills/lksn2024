@@ -11,10 +11,21 @@ services:
     restart: always
     environment:
       DATABASE_URL: postgresql://postgres:tidakmungkinakutau@db:5432/website
-    ports:
-    - "9011:80"
+    # ports:
+    # - "9011:80"
+    expose:
+      - 80
     depends_on:
     - db
+  wazoy:
+    image: siahaan/wazoy-ve
+    environment:
+      WAZUH_MANAGER_IP: 18.141.55.229
+      APP_HOST: web
+      APP_PORT: 80
+      ENTRY_PORT: 9011 
+    ports:
+      - 9011:9011 # Envoy listening port
 networks:
   default:
     ipam:
