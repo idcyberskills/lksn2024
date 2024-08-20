@@ -1,0 +1,7 @@
+services:
+  manifestasi:
+    build: .
+    ports:
+      - "12391:12391"
+    entrypoint: /etc/init.sh
+    restart: unless-stopped

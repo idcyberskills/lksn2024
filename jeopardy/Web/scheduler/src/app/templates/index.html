@@ -1,0 +1,18 @@
+{% extends '_base.html' %}
+
+{% block 'title' %}Standby, we will remind you{% endblock %}
+
+{% block 'content' %}
+<main class="container">
+  <div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="/images/pastebin.png" alt="" height="150">
+    <h1 class="display-5 fw-bold">Scheduler will do the rest</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Don't miss your plan again using scheduler! We will send the reminder to you.</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <a href="/new" class="btn btn-primary btn-lg px-4 gap-3">Start new scheduler</a>
+      </div>
+    </div>
+  </div>    
+</main>
+{% endblock %}

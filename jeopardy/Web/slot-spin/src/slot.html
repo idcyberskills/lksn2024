@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Putar dan Menangkan</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .slot-machine {
+            background-color: #d4af37;
+            border: 10px solid #8b4513;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .reels {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .reel {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border: 2px solid #333;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            overflow: hidden;
+        }
+        .symbol {
+            display: inline-block;
+            transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .spinning .symbol {
+            animation: spin 0.2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        #spin-button {
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #spin-button:hover {
+            background-color: #45a049;
+        }
+        #spin-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .points {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .points-earned {
+            font-size: 18px;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .win-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: gold;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .win-message button {
+            margin-top: 20px;
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: gold;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .win-message button:hover {
+            background-color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="slot-machine">
+            <div class="reels">
+                <div v-for="(reel, index) in reels" :key="index" class="reel" :class="{ spinning: isSpinning }">
+                    <span class="symbol">{{ reel }}</span>
+                </div>
+            </div>
+            <button id="spin-button" @click="spin" :disabled="isSpinning">Spin</button>
+            <div class="points">Diamond jackpot: {{ numJackpot }}x</div>
+            <div v-if="showWinMessage" class="win-message">
+                <div>🎉 CONGRATS! 🎉</div>
+                <div>Prize: {{ serverFlag }}</div>
+                <button @click="closeWinMessage">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, reactive } = Vue;
+
+        createApp({
+            setup() {
+                const symbols = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎'];
+                const reels = ref(['?', '?', '?']);
+                const isSpinning = ref(false);
+                const numJackpot = ref(0);
+                const showWinMessage = ref(false);
+                const serverFlag = ref("");
+
+                const symbolPoints = reactive({
+                    '🍒': 10,
+                    '🍋': 20,
+                    '🍊': 30,
+                    '🍇': 40,
+                    '🔔': 50,
+                    '💎': 100
+                });
+
+                const getRandomSymbol = () => {
+                    return symbols[Math.floor(Math.random() * symbols.length)];
+                };
+
+                const sendSpinDataToServer = async (spinResult) => {
+                    try {
+                        const response = await fetch('/slot.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                reels: spinResult
+                            }),
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+                        numJackpot.value = data["data"];
+                        if (data["flag"] != undefined && data["flag"] != null) {
+                            serverFlag.value = data["flag"];
+                            showWinMessage.value = true;
+                        }
+                    } catch (error) {
+                        console.error('Error sending spin data to server:', error);
+                    }
+                };
+
+                const spin = () => {
+                    isSpinning.value = true;
+                    showWinMessage.value = false;
+                    let spins = 0;
+                    const maxSpins = 20;
+
+                    const interval = setInterval(() => {
+                        reels.value = reels.value.map(() => getRandomSymbol());
+                        
+                        spins++;
+                        if (spins >= maxSpins) {
+                            clearInterval(interval);
+                            isSpinning.value = false;
+                            
+                            // Send spin data to server
+                            reels_id = reels.value.map((elm) => symbolPoints[elm]);
+                            sendSpinDataToServer(reels_id);
+                        }
+                    }, 100);
+                };
+
+                const closeWinMessage = () => {
+                    showWinMessage.value = false;
+                };
+
+                return {
+                    reels,
+                    isSpinning,
+                    numJackpot,
+                    serverFlag,
+                    showWinMessage,
+                    spin,
+                    closeWinMessage
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

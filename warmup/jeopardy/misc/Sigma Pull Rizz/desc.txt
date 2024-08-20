@@ -1,0 +1,3 @@
+I hope you're familiar with Docker because I got an awesome PHP application runnin' !
+
+`docker pull hanalex31/lksnhub`

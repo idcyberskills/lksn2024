@@ -1,0 +1,11 @@
+Abharondi Jang, a famous woman stalker that has gone around the world with his `DJI Phantom III` Drones (https://www.dji.com/id/downloads/products/phantom-3-standard) is just getting caught to fly his drones again in some location spotted in United States (US). The police has arrested him again once they know his face just before he flights his drone.
+
+The forensicator has extracted the flight data from DJI Go App and they need your help to determine at what **city** exactly Abharondi Jang flies its drone.
+
+Notes: This is not OSINT challenge :).
+
+If you got the city correctly, wrap it with the flag.
+
+Flag format is: LKSN{nameofthecity}
+
+Example, if the city is Los Angeles, then the flag is LKSN{losangeles}

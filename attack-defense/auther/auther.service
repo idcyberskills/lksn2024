@@ -1,0 +1,11 @@
+[Unit]
+Description=
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/auther/start.sh
+User=auther
+
+[Install]
+WantedBy=multi-user.target

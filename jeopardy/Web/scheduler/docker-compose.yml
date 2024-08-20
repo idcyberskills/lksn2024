@@ -1,0 +1,22 @@
+version: '3'
+services:
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: tidakmungkinakutau
+      POSTGRES_DB: website
+  web:
+    build: .
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:tidakmungkinakutau@db:5432/website
+    ports:
+    - "9011:80"
+    depends_on:
+    - db
+networks:
+  default:
+    ipam:
+      config:
+      - subnet: 172.32.11.0/24

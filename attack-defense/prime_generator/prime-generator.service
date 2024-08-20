@@ -1,0 +1,11 @@
+[Unit]
+Description=
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/prime-generator/start.sh
+User=prime-generator
+
+[Install]
+WantedBy=multi-user.target
