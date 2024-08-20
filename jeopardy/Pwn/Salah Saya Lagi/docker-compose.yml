@@ -1,0 +1,10 @@
+version: '3'
+services:
+  aos:
+    image: aos
+    build: .
+    restart: always
+    environment:
+      - TERM=xterm
+    ports:
+      - "11103:11103"
