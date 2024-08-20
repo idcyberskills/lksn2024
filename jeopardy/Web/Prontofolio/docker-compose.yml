@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./app
+    expose:
+      - 5000
+    # ports:
+    #   - "7755:5000"
+    volumes:
+      - ./app/pdfs:/app/pdfs
+      - ./flag.txt:/flag.txt:ro
+  wazoy:
+    image: siahaan/wazoy-ve
+    environment:
+      WAZUH_MANAGER_IP: 18.141.55.229
+      APP_HOST: web
+      APP_PORT: 5000
+      ENTRY_PORT: 7755 
+    ports:
+      - 7755:7755 # Envoy listening port
+      - 9901:9901 # Envoy admin port
