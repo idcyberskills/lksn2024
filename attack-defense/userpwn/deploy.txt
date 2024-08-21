@@ -1,0 +1,23 @@
+# jalan di ubuntu
+sudo useradd -m userpwn
+
+sudo apt install xinetd
+
+sudo mkdir -p /app/pwn
+sudo chown userpwn:userpwn /app/pwn
+
+sudo runcon user_u:user_r:user_t:s0 su - userpwn
+cd /app/pwn
+nano chall.c
+gcc chall.c -o chall
+nano run.sh
+chmod +x run.sh
+mkdir /app/pwn/flag
+echo LKSN{PLACEHOLDER} > /app/pwn/flag/flag.txt
+exit
+
+# tambahkan xinetd
+sudo nano /etc/xinetd.d/xinetd
+
+sudo systemctl start xinetd
+sudo systemctl enable xinetd
