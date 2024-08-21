@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prontofolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .url-input {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .url-input input {
+            width: 90%;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .url-input button {
+            padding: 10px;
+            border: none;
+            background-color: #28a745;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .url-input button:hover {
+            background-color: #218838;
+        }
+        #submit-btn {
+            margin-top: 20px;
+            padding: 15px;
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add URLs</h1>
+        <form id="url-form">
+            <div id="url-list">
+                <!-- Dynamic URL inputs will be appended here -->
+                <div class="url-input">
+                    <input type="url" name="urls[]" placeholder="Enter URL" required>
+                    <button type="button" onclick="addUrlInput()">+</button>
+                </div>
+            </div>
+            <button type="submit" id="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function addUrlInput() {
+            const urlList = document.getElementById('url-list');
+            const newUrlInput = document.createElement('div');
+            newUrlInput.className = 'url-input';
+            newUrlInput.innerHTML = `
+                <input type="url" name="urls[]" placeholder="Enter URL" required>
+                <button type="button" onclick="removeUrlInput(this)">-</button>
+            `;
+            urlList.appendChild(newUrlInput);
+        }
+
+        function removeUrlInput(button) {
+            const urlList = document.getElementById('url-list');
+            urlList.removeChild(button.parentNode);
+        }
+
+        document.getElementById('url-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const urls = formData.getAll('urls[]');
+
+            fetch('/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ urls }),
+            })
+            .then(response => response.blob()) 
+            .then(blob => {
+                const link = document.createElement('a');
+                const url = window.URL.createObjectURL(blob);
+                link.href = url;
+                link.download = 'sample.pdf';
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                alert('Error submitting URLs');
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
