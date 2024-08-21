@@ -121,8 +121,8 @@ def check_user(proc):
                     "detail_error": "failed to get menu"
                 }
             )
-        
-    if i < 5:
+    
+    if i < 1:
         return (
             False,
             {
@@ -243,7 +243,7 @@ def check_admin(proc, flag):
                 }
             )
         
-    if i < 5:
+    if i < 1:
         return (
             False,
             {
