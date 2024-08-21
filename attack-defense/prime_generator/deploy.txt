@@ -1,0 +1,30 @@
+# jalan di ubuntu
+sudo useradd -m prime-generator
+
+sudo apt install -y python3-pip
+sudo apt install -y python3.12-venv
+sudo apt install -y socat
+
+sudo mkdir -p /usr/local/share/prime-generator/
+sudo chown prime-generator:prime-generator /usr/local/share/prime-generator/
+
+sudo runcon user_u:user_r:user_t:s0 su - prime-generator
+
+
+# jalan di prime-generator
+nano /home/prime-generator/start.sh
+nano /usr/local/share/prime-generator/server.py
+chmod +x /home/prime-generator/start.sh
+
+mkdir /usr/local/share/prime-generator/flag
+echo LKSN{PLACEHOLDER} > /usr/local/share/prime-generator/flag/flag.txt
+exit
+
+# tambahkan systemd
+sudo nano /etc/systemd/system/prime-generator.service
+
+# chcon
+sudo chcon -t banpolicy_l0_t /usr/local/share/prime-generator/flag
+
+sudo systemctl start prime-generator.service
+sudo systemctl enable prime-generator.service

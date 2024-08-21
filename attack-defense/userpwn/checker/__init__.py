@@ -92,15 +92,7 @@ def check_3(io):
 	return True
 
 def main(services: List[ServiceType], flags: List[FlagType], checker_agent_report: CheckerAgentReport) -> Tuple[bool, Dict]:
-    service_detail = services[0]["detail"]
-
-    credentials = service_detail["checker"]
-    aws_stack_name = service_detail["stack_name"]
-    ip = credentials["ip"]
-    username = credentials["username"]
-    privkey = credentials["private_key"]
-    instance_id = credentials["instance_id"]
-    flag = flags[0]["value"]
+    ip = services[0]["detail"]["checker"]["ip"]
     port = 11100
 
     proc = None
@@ -110,7 +102,8 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed to connect to service"
+                "message": "not reachable",
+                "detail_error": "failed to connect to service"
             }
         )
     result_check_1 = check_1(proc)
@@ -119,7 +112,8 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed on check 1"
+                "message": "service faulty",
+                "detail_error": "failed on check 1"
             }
         )
     
@@ -130,7 +124,8 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed to connect to service"
+                "message": "not reachable",
+                "detail_error": "failed to connect to service"
             }
         )
     result_check_2 = check_2(proc)
@@ -139,7 +134,8 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed on check 2"
+                "message": "service faulty",
+                "detail_error": "failed on check 2"
             }
         )
     
@@ -150,7 +146,8 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed to connect to service"
+                "message": "service faulty",
+                "detail_error": "failed to connect to service"
             }
         )
     result_check_3 = check_3(proc)
@@ -159,14 +156,15 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed on check 3"
+                "message": "service faulty",
+                "detail_error": "failed on check 3"
             }
         )
 
     return (
         True,
         {
-            "message": "OK"
+            "message": "valid"
         }
     )
 

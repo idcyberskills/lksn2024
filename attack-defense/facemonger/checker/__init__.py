@@ -31,19 +31,19 @@ def run_testcase(BASE_URL):
         return (True if res.status_code == 200 else False, None)
     
     start_time = datetime.datetime.now(datetime.timezone.utc).isoformat()
-    rand_val = random.randint(5, 15)
 
     status_upload, image_url = upload_image()
     status_get_image, _ = check_uploaded_image(image_url)
 
     end_time = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    service_verdict = status_upload and status_get_image
     return (
-        status_upload and status_get_image,
+        service_verdict,
         {
             "start_time": start_time,
             "end_time": end_time,
-            "duration": rand_val,
-            "message": f"Upload: {status_upload} || Get Image: {status_get_image}"
+            "message": "valid" if service_verdict else "service faulty",
+            "detail_error": f"Upload: {status_upload} || Get Image: {status_get_image}"
         }
     )
 
@@ -74,16 +74,7 @@ class CheckerAgentReport(TypedDict):
     time_created: datetime.datetime
 
 def main(services: List[ServiceType], flags: List[FlagType], checker_agent_report: CheckerAgentReport) -> Tuple[bool, Dict]:
-    service_detail = services[0]["detail"]
-
-    credentials = service_detail["checker"]
-    aws_stack_name = service_detail["stack_name"]
-    ip = credentials["ip"]
-    username = credentials["username"]
-    privkey = credentials["private_key"]
-    instance_id = credentials["instance_id"]
-    flag = flags[0]["value"]
-
+    ip = services[0]["detail"]["checker"]["ip"]
     base_url = f'http://{ip}:7744'
     return run_testcase(base_url)
 

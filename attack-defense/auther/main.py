@@ -20,7 +20,7 @@ files = {}
 
 def update_admin():
     f = open(flag_path, "rb")
-    flag = f.read()
+    flag = f.read().strip()
     f.close()
     hasher = hashlib.sha256()
     hasher.update(flag)
