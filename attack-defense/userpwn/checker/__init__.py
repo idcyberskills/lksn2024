@@ -110,7 +110,8 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed to connect to service"
+                "message": "not reachable",
+                "detail_error": "failed to connect to service"
             }
         )
     result_check_1 = check_1(proc)
@@ -119,7 +120,8 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed on check 1"
+                "message": "service faulty",
+                "detail_error": "failed on check 1"
             }
         )
     
@@ -130,7 +132,8 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed to connect to service"
+                "message": "not reachable",
+                "detail_error": "failed to connect to service"
             }
         )
     result_check_2 = check_2(proc)
@@ -139,7 +142,8 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed on check 2"
+                "message": "service faulty",
+                "detail_error": "failed on check 2"
             }
         )
     
@@ -150,7 +154,8 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed to connect to service"
+                "message": "service faulty",
+                "detail_error": "failed to connect to service"
             }
         )
     result_check_3 = check_3(proc)
@@ -159,14 +164,15 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
         return (
             False,
             {
-                "message": "failed on check 3"
+                "message": "service faulty",
+                "detail_error": "failed on check 3"
             }
         )
 
     return (
         True,
         {
-            "message": "OK"
+            "message": "valid"
         }
     )
 

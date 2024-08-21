@@ -50,7 +50,8 @@ def check_regular_user(base_url):
         return (
             False,
             {
-                "message": "fail to send request to register api"
+                "message": "service faulty",
+                "detail_error": "fail to send request to register api"
             }
         )
 
@@ -62,7 +63,8 @@ def check_regular_user(base_url):
         return (
             False,
             {
-                "message": "response from register api is incorrect"
+                "message": "service faulty",
+                "detail_error": "response from register api is incorrect"
             }
         )
     
@@ -78,7 +80,8 @@ def check_regular_user(base_url):
         return (
             False,
             {
-                "message": "fail to send request to login api"
+                "message": "service faulty",
+                "detail_error": "fail to send request to login api"
             }
         )
 
@@ -93,7 +96,8 @@ def check_regular_user(base_url):
         return (
             False,
             {
-                "message": "response from login api is incorrect"
+                "message": "service faulty",
+                "detail_error": "response from login api is incorrect"
             }
         )
 
@@ -111,7 +115,8 @@ def check_regular_user(base_url):
         return (
             False,
             {
-                "message": "fail to send request to get data api"
+                "message": "service faulty",
+                "detail_error": "fail to send request to get data api"
             }
         )
 
@@ -121,14 +126,15 @@ def check_regular_user(base_url):
         return (
             False,
             {
-                "message": "response from get data api is incorrect"
+                "message": "service faulty",
+                "detail_error": "response from get data api is incorrect"
             }
         )
     
     return (
         True,
         {
-            "message": "OK"
+            "message": "valid"
         }
     )
 
@@ -151,7 +157,8 @@ def check_admin(base_url, flag):
         return (
             False,
             {
-                "message": "fail to send request to register api"
+                "message": "service faulty",
+                "detail_error": "fail to send request to register api"
             }
         )
 
@@ -161,7 +168,8 @@ def check_admin(base_url, flag):
         return (
             False,
             {
-                "message": "response from register api is incorrect"
+                "message": "service faulty",
+                "detail_error": "response from register api is incorrect"
             }
         )
     
@@ -177,7 +185,8 @@ def check_admin(base_url, flag):
         return (
             False,
             {
-                "message": "fail to send request to login api"
+                "message": "service faulty",
+                "detail_error": "fail to send request to login api"
             }
         )
 
@@ -192,7 +201,8 @@ def check_admin(base_url, flag):
         return (
             False,
             {
-                "message": "response from login api is incorrect"
+                "message": "service faulty",
+                "detail_error": "response from login api is incorrect"
             }
         )
 
@@ -210,7 +220,8 @@ def check_admin(base_url, flag):
         return (
             False,
             {
-                "message": "fail to send request to get data api"
+                "message": "service faulty",
+                "detail_error": "fail to send request to get data api"
             }
         )
 
@@ -220,14 +231,14 @@ def check_admin(base_url, flag):
         return (
             False,
             {
-                "message": "missing flag"
+                "message": "flag missing"
             }
         )
     
     return (
         True,
         {
-            "message": "OK"
+            "message": "valid"
         }
     )
 
@@ -249,7 +260,8 @@ def check_upload_file_endpoint(base_url):
         return (
             False,
             {
-                "message": "failed to get desired response from upload file endpoint"
+                "message": "service faulty",
+                "detail_error": "failed to get desired response from upload file endpoint"
             }
         )
     try:
@@ -262,13 +274,14 @@ def check_upload_file_endpoint(base_url):
         return (
             False,
             {
-                "message": "failed to get initial file from upload file endpoint"
+                "message": "service faulty",
+                "detail_error": "failed to get initial file from upload file endpoint"
             }
         )
     return (
         True,
         {
-            "message": "OK"
+            "message": "valid"
         }
     )
 
@@ -299,7 +312,7 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
     return (
         True,
         {
-            "message": "OK"
+            "message": "valid"
         }
     )
 
