@@ -3,5 +3,5 @@
 cd /home/auther/service/
 python3 -m venv env
 source env/bin/activate
-pip install fastapi uvicorn pydantic jwt python-multipart
-uvicorn main:app --reload
+pip install fastapi uvicorn pydantic pyjwt python-multipart
+uvicorn --host 8000 main:app --reload
