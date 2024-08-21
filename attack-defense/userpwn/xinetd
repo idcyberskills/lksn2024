@@ -1,0 +1,14 @@
+service pwn-chall
+{
+        disable = no
+        socket_type = stream
+        protocol = tcp
+        wait = no
+        user = userpwn
+        type = UNLISTED
+        port = 11100
+        bind = 0.0.0.0
+        server = /app/pwn/run.sh
+        per_source = 10
+        rlimit_cpu = 20
+}

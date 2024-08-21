@@ -1,17 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-//gcc chall.c -o chall
-#define MAX_PARTICIPANTS 124
+
+#define MAX_PARTICIPANTS 20
 #define MAX_NAME_LENGTH 64
-
-struct Participant {
+// gcc ./chall.c -o chall
+typedef struct {
     char name[MAX_NAME_LENGTH];
-    int age;
+    long long int age;
     char category[64];
-};
+} Participant;
 
-struct Participant participants[MAX_PARTICIPANTS];
 int participantCount = 0;
 
 void init() {
@@ -22,17 +21,17 @@ void init() {
 }
 
 int readint(){
-    char buf[0x10];
-    return atoi(fgets(buf,0x10,stdin));
+    char buf[0x18];
+    return atoi(fgets(buf,0x18,stdin));
 }
 
-void registerParticipant() {
+void registerParticipant(Participant participants[]) {
     if (participantCount >= MAX_PARTICIPANTS) {
         printf("Maximum number of participants reached.\n");
         return;
     }
 
-    struct Participant newParticipant;
+    Participant newParticipant;
 
     printf("Enter participant name: ");
     fgets(newParticipant.name, MAX_NAME_LENGTH, stdin);
@@ -42,11 +41,12 @@ void registerParticipant() {
     printf("Enter participant category: ");
     fgets(newParticipant.category, 64, stdin);
     newParticipant.category[strcspn(newParticipant.category, "\n")] = 0;
-    participants[participantCount++] = newParticipant;
+    participants[participantCount] = newParticipant;
+    participantCount++;
     printf("Participant registered successfully.\n");
 }
 
-void viewParticipants() {
+void viewParticipants(Participant participants[]) {
     int index;
     printf("Enter the index of the participant to view: ");
     index=readint();
@@ -63,20 +63,20 @@ void viewParticipants() {
     puts(";");
 }
 
-void deleteParticipant() {
+void deleteParticipant(Participant participants[]) {
     int index;
     printf("Enter the index of the participant to delete: ");
     index = readint();
-
-    index-- ; // Adjust for 0-based array indexing
-    for (int i = index; i < participantCount - 1; i++) {
+// 2 -> 1  0 2
+    index = index - 1; // Adjust for 0-based array indexing
+    for (int i = index; i < participantCount - 1 ; i++) {
         participants[i] = participants[i + 1];
     }
     participantCount-- ;
     printf("Participant deleted successfully.\n");
 }
 
-void editParticipant() {
+void editParticipant(Participant participants[]) {
     int index;
     int newAge;
     printf("Enter the index of the participant to edit: ");
@@ -100,6 +100,7 @@ void editParticipant() {
 }
 
 int main() {
+    Participant participants[MAX_PARTICIPANTS];
     int choice;
     init();
     do {
@@ -114,10 +115,10 @@ int main() {
         choice=readint();
 
         switch (choice) {
-            case 1: registerParticipant(); break;
-            case 2: viewParticipants(); break;
-            case 3: deleteParticipant(); break;
-            case 4: editParticipant(); break;
+            case 1: registerParticipant(participants); break;
+            case 2: viewParticipants(participants); break;
+            case 3: deleteParticipant(participants); break;
+            case 4: editParticipant(participants); break;
             case 5: printf("Exiting program.\n"); break;
             default: printf("Invalid choice. Please try again.\n");
         }
@@ -125,3 +126,5 @@ int main() {
 
     return 0;
 }
+
+

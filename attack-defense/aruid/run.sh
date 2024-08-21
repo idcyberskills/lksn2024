@@ -1,0 +1,1 @@
+chmod u+s /usr/bin/ar

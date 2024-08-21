@@ -1,0 +1,10 @@
+version: '3'
+services:
+  tnofo:
+    image: tnofo
+    build: .
+    restart: always
+    environment:
+      - TERM=xterm
+    ports:
+      - "11102:11102"

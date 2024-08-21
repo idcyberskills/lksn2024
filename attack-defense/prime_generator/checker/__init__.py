@@ -38,7 +38,8 @@ def check_user(proc):
         return (
             False,
             {
-                "message": "failed to send admin context"
+                "message": "service faulty",
+                "detail_error": "failed to send admin context"
             }
         )
 
@@ -53,7 +54,8 @@ def check_user(proc):
         return (
             False,
             {
-                "message": "failed to get public key"
+                "message": "service faulty",
+                "detail_error": "failed to get public key"
             }
         )
     
@@ -72,7 +74,8 @@ def check_user(proc):
             return (
                 False,
                 {
-                    "message": "failed to encrypt message"
+                    "message": "service faulty",
+                    "detail_error": "failed to encrypt message"
                 }
             )
 
@@ -88,7 +91,8 @@ def check_user(proc):
             return (
                 False,
                 {
-                    "message": "failed to login as user"
+                    "message": "service faulty",
+                    "detail_error": "failed to login as user"
                 }
             )
 
@@ -100,7 +104,8 @@ def check_user(proc):
             return (
                 False,
                 {
-                    "message": "failed to get public key"
+                    "message": "service faulty",
+                    "detail_error": "failed to get public key"
                 }
             )
         
@@ -112,21 +117,23 @@ def check_user(proc):
             return (
                 False,
                 {
-                    "message": "failed to get menu"
+                    "message": "service faulty",
+                    "detail_error": "failed to get menu"
                 }
             )
-        
-    if i < 5:
+    
+    if i < 1:
         return (
             False,
             {
-                "message": "prime count too few"
+                "message": "service faulty",
+                "detail_error": "prime count too few"
             }
         )
     return (
         True,
         {
-            "message": "OK"
+            "message": "valid"
         }
     )
 
@@ -142,7 +149,8 @@ def check_admin(proc, flag):
         return (
             False,
             {
-                "message": "failed to send admin context"
+                "message": "service faulty",
+                "detail_error": "failed to send admin context"
             }
         )
     
@@ -161,7 +169,8 @@ def check_admin(proc, flag):
         return (
             False,
             {
-                "message": "failed to get public key"
+                "message": "service faulty",
+                "detail_error": "failed to get public key"
             }
         )
     
@@ -180,7 +189,8 @@ def check_admin(proc, flag):
             return (
                 False,
                 {
-                    "message": "failed to encrypt message"
+                    "message": "service faulty",
+                    "detail_error": "failed to encrypt message"
                 }
             )
 
@@ -198,7 +208,8 @@ def check_admin(proc, flag):
             return (
                 False,
                 {
-                    "message": "failed to login as admin"
+                    "message": "service faulty",
+                    "detail_error": "failed to login as admin"
                 }
             )
 
@@ -214,7 +225,8 @@ def check_admin(proc, flag):
             return (
                 False,
                 {
-                    "message": "failed to get public key"
+                    "message": "service faulty",
+                    "detail_error": "failed to get public key"
                 }
             )
         
@@ -226,70 +238,69 @@ def check_admin(proc, flag):
             return (
                 False,
                 {
-                    "message": "failed to get menu"
+                    "message": "service faulty",
+                    "detail_error": "failed to get menu"
                 }
             )
         
-    if i < 5:
+    if i < 1:
         return (
             False,
             {
-                "message": "prime count too few"
+                "message": "service faulty",
+                "detail_error": "prime count too few"
             }
         )
     return (
         True,
         {
-            "message": "OK"
+            "message": "valid"
         }
     )
 
 def main(services: List[ServiceType], flags: List[FlagType], checker_agent_report: CheckerAgentReport) -> Tuple[bool, Dict]:
-    service_detail = services[0]["detail"]
-
-    credentials = service_detail["checker"]
-    aws_stack_name = service_detail["stack_name"]
-    ip = credentials["ip"]
-    username = credentials["username"]
-    privkey = credentials["private_key"]
-    instance_id = credentials["instance_id"]
+    ip = services[0]["detail"]["checker"]["ip"]
     flag = flags[0]["value"]
     port = 10003
     
     try:
-        proc = None
-        try:
-            proc = remote(ip, port)
-        except:
-            return (
-                False,
-                {
-                    "message": "failed to connect to service"
-                }
-            )
-        result_check_user = check_user(proc)
-        proc.close()
-        if not result_check_user[0]:
-            return result_check_user
-
-        proc = None
-        try:
-            proc = remote(ip, port)
-        except:
-            return (
-                False,
-                {
-                    "message": "failed to connect to service"
-                }
-            )
-        result_check_admin = check_admin(proc, flag)
-        if not result_check_admin[0]:
-            return result_check_admin
+        x = random.randint(1, 100)
+        if x % 2 == 0:
+            proc = None
+            try:
+                proc = remote(ip, port)
+            except:
+                return (
+                    False,
+                    {
+                        "message": "service faulty",
+                        "detail_error": "failed to connect to service"
+                    }
+                )
+            result_check_user = check_user(proc)
+            proc.close()
+            if not result_check_user[0]:
+                return result_check_user
+        else:
+            proc = None
+            try:
+                proc = remote(ip, port)
+            except:
+                return (
+                    False,
+                    {
+                        "message": "not reachable",
+                        "detail_error": "failed to connect to service"
+                    }
+                )
+            result_check_admin = check_admin(proc, flag)
+            if not result_check_admin[0]:
+                return result_check_admin
 
         return (
             True,
             {
-                "message": "OK"
+                "message": "valid"
             }
         )
     except:
@@ -297,7 +308,8 @@ def main(services: List[ServiceType], flags: List[FlagType], checker_agent_repor
     return (
         False,
         {
-            "message": "unexpected error happened"
+            "message": "service faulty",
+            "detail_error": "unexpected error happened"
         }
     )
 

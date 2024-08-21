@@ -1,5 +1,5 @@
 services:
-  manifestasi:
+  modifikasi:
     build: .
     ports:
       - "12591:12591"
