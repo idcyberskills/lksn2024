@@ -11,15 +11,18 @@ mkdir /home/auther/service
 mkdir /home/auther/service/flag
 
 # insert files here
-touch /home/auther/service/start.sh
-touch /home/auther/service/main.py
+nano /home/auther/service/start.sh
+nano /home/auther/service/main.py
 
 echo LKSN{PLACEHOLDER} > /home/auther/service/flag/flag.txt
-sudo chmod +x /home/auther/service/start.sh
+chmod +x /home/auther/service/start.sh
 exit
 
 # tambahkan systemd
-sudo touch /etc/systemd/system/auther.service
+sudo nano /etc/systemd/system/auther.service
+
+# chcon
+sudo chcon -t banpolicy_l0_t /home/auther/service/flag
 
 sudo systemctl start auther.service
 sudo systemctl enable auther.service
